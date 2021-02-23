@@ -21,3 +21,7 @@
 - Encrypt files and save as copy
 - Delete original files
 - Clear encryption key from memory
+
+## Python requirements
+- pip install cryptography
+- pip install rsa
