@@ -1,1 +1,4 @@
-# test
+# mitigation notes
+For mitigation, we used applocker and locked down python from running on our system. I locked it down under executable rules using both publisher and path restrictions to disuade an attacker from installing python in a weird location and to disallow python running based off publisher information. We did this because our scenario was protecting a local repository server and code should not be run there so it made sense to mitigate it this way. 
+
+To employ applocker, open "local security policy" on windows, then navigate to application control policies, applocker, and executable rules. Then create default rules and create a new rule. For publisher, select python.exe under C:\Users\%username%\.appdata\local\programs\python. This will automatically fill the publisher data. For path blocking I used C:\Users\*\.appdata\local\programs\python\* to disallow any user from running anything under the python directory. Apply this rule and navigate to the applocker main screen in local security policy window. Click configure rule enforcement and enable executable rules under enforced. This will activate the rules.
