@@ -1,19 +1,27 @@
-#Import for symmetric encryption
+# Import for symmetric encryption
 from cryptography.fernet import Fernet
 
-#Import for asymmetric encryption
+# Import for asymmetric encryption
 import rsa
 
-#Imports for file deletion
+# Import for file deletion
 import os
 
 # Generates encryption keys
 def keys():
     symKey = Fernet.generate_key()
-    asymPubKey, asymPrivKey = rsa.newkeys(512)
+
+    with open('asymPubKey.pem', mode='rb') as pubfile:
+        keydata = pubfile.read()
+    asymPubKey = rsa.PublicKey.load_pkcs1(keydata)
+
+    symKeyEncrypted = rsa.encrypt(symKey, asymPubKey)
+    symKeyFile = open("symKeyEnc.txt", "x")
+    symKeyFile.write(str(symKeyEncrypted))
+    symKeyFile.close()
 
     #Prints keys for debugging purposes
-    print("symKey:",symKey,"\nasymPubKey:",asymPubKey,"\nasymPrivKey:",asymPrivKey)
+    print("symKey:",symKey,"\nasymPubKey:",asymPubKey)
 
     print("Keys generated")
     return symKey
